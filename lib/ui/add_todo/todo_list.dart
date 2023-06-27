@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
 import 'package:send_remider_to_user/constants/colors.dart';
 import 'package:send_remider_to_user/data/sharedpref/constants/preferences.dart';
 import 'package:send_remider_to_user/stores/form/form_store.dart';
@@ -11,8 +13,6 @@ import 'package:send_remider_to_user/ui/contacts/contacts.dart';
 import 'package:send_remider_to_user/utils/device/device_utils.dart';
 import 'package:send_remider_to_user/utils/locale/app_localization.dart';
 import 'package:send_remider_to_user/widgets/title_with_back_button.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TodoListScreen extends StatefulWidget {
@@ -79,8 +79,8 @@ class _TodoListScreenState extends State<TodoListScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: Text('Task List'),
+      appBar: AppBar(
+        title: const Text('Task List'),
         bottom: TabBar(
           controller: _tabController,
           tabs: const <Widget>[
@@ -133,7 +133,7 @@ class _TodoListScreenState extends State<TodoListScreen>
                               builder: (context) => AddTodoPage()));
                     },
                     child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: AppColors.newButtonColor,
                         ),
@@ -184,7 +184,7 @@ class _TodoListScreenState extends State<TodoListScreen>
           // ),
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 // borderRadius: BorderRadius.only(
                 //     topLeft: Radius.circular(
@@ -207,10 +207,11 @@ class _TodoListScreenState extends State<TodoListScreen>
                     valueListenable:
                         Hive.box<Contact>(contactsBoxName).listenable(),
                     builder: (context, Box<Contact> box, _) {
-                      if (box.values.isEmpty)
-                        return Center(
+                      if (box.values.isEmpty) {
+                        return const Center(
                           child: Text("No contacts"),
                         );
+                      }
                       return ListView.builder(
                         itemCount: box.length,
                         itemBuilder: (context, index) {

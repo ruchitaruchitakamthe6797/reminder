@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 
 part 'contacts.g.dart';
 
@@ -36,7 +33,8 @@ class Contact {
   @HiveField(5)
   String reminderTitle;
 
-  Contact(this.name, this.time, this.desc, this.googleLink,this.image,this.reminderTitle);
+  Contact(this.name, this.time, this.desc, this.googleLink, this.image,
+      this.reminderTitle);
 }
 
 // void main() async {

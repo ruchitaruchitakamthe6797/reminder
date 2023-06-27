@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -13,6 +12,5 @@ class Routes {
 
   static final routes = <String, WidgetBuilder>{
     // splash: (BuildContext context) => SplashScreen(),
-   
   };
 }

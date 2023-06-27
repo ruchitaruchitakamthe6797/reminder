@@ -1,9 +1,9 @@
 // ignore_for_file: unused_local_variable, deprecated_member_use
 
+import 'package:flutter/material.dart';
 import 'package:send_remider_to_user/responsive.dart';
 import 'package:send_remider_to_user/utils/device/device_utils.dart';
 import 'package:send_remider_to_user/widgets/back_button_widget.dart';
-import 'package:flutter/material.dart';
 
 class TitleWidget extends StatelessWidget {
   final text, back, ontap;
@@ -12,7 +12,7 @@ class TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Row(
       children: [
         BackButtonWidget(back: back, ontap: ontap),

@@ -1,29 +1,26 @@
+import 'dart:developer';
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:send_remider_to_user/constants/colors.dart';
-import 'package:send_remider_to_user/constants/keyboardoverlay.dart';
-import 'package:send_remider_to_user/data/sharedpref/constants/preferences.dart';
-import 'package:send_remider_to_user/main.dart';
+import 'package:send_remider_to_user/data/api/firebase_api.dart';
 import 'package:send_remider_to_user/responsive.dart';
 import 'package:send_remider_to_user/stores/form/form_store.dart';
 import 'package:send_remider_to_user/stores/theme/theme_store.dart';
 import 'package:send_remider_to_user/utils/device/device_utils.dart';
 import 'package:send_remider_to_user/widgets/button_widget.dart';
 import 'package:send_remider_to_user/widgets/textfeild_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:provider/provider.dart';
 import 'package:send_remider_to_user/widgets/title_with_back_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
+
 import '../contacts/contacts.dart';
 
 class AddTodoPage extends StatefulWidget {
@@ -62,7 +59,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
 // initializationSettings=InitializationSettings(initializationSettingsAndroid,initializationSettingsIOS);
 //     _flutterLocalNotificationService.initialize(initializationSettings,selectNotification:)
 //   }
-  FlutterLocalNotificationsPlugin? _local = null;
+  FlutterLocalNotificationsPlugin? _local;
   @override
   void initState() {
     super.initState();
@@ -72,7 +69,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
   Future<void> _initLocalNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
-    final InitializationSettings initializationSettings =
+    const InitializationSettings initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
     _local = FlutterLocalNotificationsPlugin();
     await _local!.initialize(initializationSettings);
@@ -94,7 +91,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
         NotificationDetails(android: androidPlatformChannelSpecifics);
 
     // Calculate the notification trigger time by adding 15 minutes to the current time
-    final scheduledTime = DateTime.now().add(Duration(seconds: 15));
+    final scheduledTime = DateTime.now().add(const Duration(seconds: 1));
 
     // Schedule the notification
     await _local!.schedule(
@@ -180,7 +177,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                                 child: Column(
                                   children: <Widget>[
                                     Container(
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           gradient: LinearGradient(
                                             begin: Alignment.topCenter,
                                             end: Alignment.bottomCenter,
@@ -208,14 +205,14 @@ class _AddTodoPageState extends State<AddTodoPage> {
                                               topRight: Radius.circular(
                                                   DeviceUtils.getScaledWidth(
                                                       context, 5))),
-                                          boxShadow: [
+                                          boxShadow: const [
                                             BoxShadow(
                                               color: Colors.black38,
                                               blurRadius: 25,
                                               offset: Offset(0, 10),
                                             ),
                                           ],
-                                          color: Color(0xffFFFFFF),
+                                          color: const Color(0xffFFFFFF),
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
@@ -278,6 +275,26 @@ class _AddTodoPageState extends State<AddTodoPage> {
                                                       toastLength:
                                                           Toast.LENGTH_LONG);
                                                   scheduleNotification();
+
+                                                  /* 
+                                                  run this command: firebase deploy --only functions  
+                                                  after running above command you will have error so follow the link you need to pay for that           
+                                                  Error: Your project send-reminder-to-user must be on the Blaze (pay-as-you-go) plan to complete this command. Required API artifactregistry.googleapis.com can't be enabled until the upgrade is complete. To upgrade, visit the following URL:
+                                                  https://console.firebase.google.com/project/send-reminder-to-user/usage/details
+                                                  */
+                                                  
+                                                  // pass your desired values to the function as of now i have just passed hard code value for time.
+                                                  FirebaseApi()
+                                                      .sendScheduledNotification(
+                                                    token: "token",
+                                                    notificationTitle:
+                                                        notificationTitle
+                                                            .toString(),
+                                                    notificationBody:
+                                                        notificationBody
+                                                            .toString(),
+                                                    sendTime: DateTime.now(),
+                                                  );
                                                 }
                                               }, 'Add Reminder'),
                                               SizedBox(
@@ -345,8 +362,8 @@ class _AddTodoPageState extends State<AddTodoPage> {
           return AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            title: Text('Please choose media to select'),
-            content: Container(
+            title: const Text('Please choose media to select'),
+            content: SizedBox(
               height: MediaQuery.of(context).size.height / 6,
               child: Column(
                 children: [
@@ -357,7 +374,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                       getImage(ImageSource.gallery);
                     },
                     child: Row(
-                      children: [
+                      children: const [
                         Icon(Icons.image),
                         Text('From Gallery'),
                       ],
@@ -370,7 +387,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
                       getImage(ImageSource.camera);
                     },
                     child: Row(
-                      children: [
+                      children: const [
                         Icon(Icons.camera),
                         Text('From Camera'),
                       ],
@@ -604,10 +621,8 @@ class _AddTodoPageState extends State<AddTodoPage> {
         }
       },
     );
-    print("dateTime: $dateTime");
-    if (dateTime.toString().isNotEmpty &&
-        dateTime.toString() != null &&
-        dateTime.toString() != "null") {
+    log("dateTime: $dateTime");
+    if (dateTime.toString().isNotEmpty && dateTime.toString() != "null") {
       String formattedDate = DateFormat('yyyy-MM-dd kk:mm').format(dateTime!);
       if (formattedDate.isNotEmpty) {
         if (toDateTimeClick == true) {
@@ -828,7 +843,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
     );
   }
 
-  bool _addImage = false;
+  final bool _addImage = false;
   Widget _buildAddImageField() {
     return GestureDetector(
       onTap: () {
@@ -902,7 +917,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
   Widget _buildFormLableText(text) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.subtitle2!.copyWith(
+      style: Theme.of(context).textTheme.titleSmall!.copyWith(
           fontSize: DeviceUtils.getScaledWidth(context, 3.5),
           color: AppColors.textfeildText),
       textAlign: TextAlign.center,

@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:send_remider_to_user/constants/colors.dart';
 import 'package:send_remider_to_user/utils/device/device_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TodoListCard extends StatefulWidget {
@@ -128,7 +128,7 @@ class _TodoListCardState extends State<TodoListCard> {
             name,
             style: Theme.of(context)
                 .textTheme
-                .headline6!
+                .titleLarge!
                 .copyWith(fontSize: DeviceUtils.getScaledWidth(context, 4)),
             textAlign: TextAlign.start,
           ),
@@ -140,7 +140,7 @@ class _TodoListCardState extends State<TodoListCard> {
             maxLines: 1,
             style: Theme.of(context)
                 .textTheme
-                .subtitle1!
+                .titleMedium!
                 .copyWith(fontSize: DeviceUtils.getScaledWidth(context, 4)),
             textAlign: TextAlign.start,
           ),

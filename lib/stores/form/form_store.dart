@@ -1,7 +1,7 @@
-import 'dart:math';
+import 'dart:developer';
 
-import 'package:send_remider_to_user/stores/error/error_store.dart';
 import 'package:mobx/mobx.dart';
+import 'package:send_remider_to_user/stores/error/error_store.dart';
 import 'package:validators/validators.dart';
 
 part 'form_store.g.dart';
@@ -322,7 +322,7 @@ abstract class _FormStore with Store {
   Future login() async {
     loading = true;
 
-    Future.delayed(Duration(milliseconds: 2000)).then((future) {
+    Future.delayed(const Duration(milliseconds: 2000)).then((future) {
       loading = false;
       success = true;
     }).catchError((e) {
@@ -331,7 +331,7 @@ abstract class _FormStore with Store {
       errorStore.errorMessage = e.toString().contains("ERROR_USER_NOT_FOUND")
           ? "Username and password doesn't match"
           : "Something went wrong, please check your internet connection and try again";
-      print(e);
+      log(e);
     });
   }
 

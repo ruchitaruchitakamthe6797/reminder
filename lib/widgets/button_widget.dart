@@ -1,26 +1,23 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:flutter/material.dart';
 import 'package:send_remider_to_user/constants/colors.dart';
 import 'package:send_remider_to_user/utils/device/device_utils.dart';
-import 'package:flutter/material.dart';
 
 class ButtonWidget extends StatelessWidget {
-  final text, onPressed,borderRadius;
+  final text, onPressed, borderRadius;
 
   //final Function? onTap;
 
-  const ButtonWidget({
-    Key? key,
-    this.text,
-    this.onPressed,this.borderRadius
-  }) : super(key: key);
+  const ButtonWidget({Key? key, this.text, this.onPressed, this.borderRadius})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-            borderRadius:borderRadius??
+            borderRadius: borderRadius ??
                 BorderRadius.circular(DeviceUtils.getScaledWidth(context, 4))),
         primary: AppColors.newButtonColor,
         padding: EdgeInsets.symmetric(

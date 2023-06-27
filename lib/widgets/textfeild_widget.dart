@@ -1,10 +1,10 @@
 // ignore_for_file: deprecated_member_use, unused_local_variable
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:send_remider_to_user/constants/colors.dart';
 import 'package:send_remider_to_user/responsive.dart';
 import 'package:send_remider_to_user/utils/device/device_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class CustomIconTextFieldWidget extends StatelessWidget {
   final Widget? icon;
@@ -37,7 +37,7 @@ class CustomIconTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Container(
       /* decoration: BoxDecoration(
         borderRadius: BorderRadius.all(
@@ -86,7 +86,7 @@ class CustomIconTextFieldWidget extends StatelessWidget {
 
           // contentPadding: EdgeInsets.symmetric(vertical: DeviceUtils.getScaledHeight(context, 1.6)),
           isDense: true,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: textfeildBorder, width: 1.0),
             borderRadius: BorderRadius.circular(Responsive.isTablet(context)

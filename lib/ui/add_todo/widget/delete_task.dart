@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:send_remider_to_user/constants/colors.dart';
 import 'package:send_remider_to_user/utils/device/device_utils.dart';
@@ -15,7 +16,7 @@ deleteTaskDialog({BuildContext? context, String? remdTitle, final ontap}) {
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: Dialog(
               backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
               child: DeleteTask(
                 ontap: ontap,
@@ -78,13 +79,13 @@ class _DeleteTaskState extends State<DeleteTask> {
                 children: [
                   Expanded(
                     child: TextButton(
-                      child: Text("No"),
+                      child: const Text("No"),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ),
                   Expanded(
                       child: TextButton(
-                          child: Text("Yes"), onPressed: widget.ontap)),
+                          onPressed: widget.ontap, child: const Text("Yes"))),
                 ],
               ),
             ),
@@ -105,7 +106,7 @@ class _DeleteTaskState extends State<DeleteTask> {
               name,
               style: Theme.of(context)
                   .textTheme
-                  .headline6!
+                  .titleLarge!
                   .copyWith(fontSize: DeviceUtils.getScaledWidth(context, 4)),
               textAlign: TextAlign.start,
             ),
@@ -116,7 +117,7 @@ class _DeleteTaskState extends State<DeleteTask> {
               value,
               style: Theme.of(context)
                   .textTheme
-                  .subtitle1!
+                  .titleMedium!
                   .copyWith(fontSize: DeviceUtils.getScaledWidth(context, 4)),
               textAlign: TextAlign.start,
             ),
@@ -134,7 +135,7 @@ class _DeleteTaskState extends State<DeleteTask> {
       // ),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        primary: AppColors.appBlue,
+        backgroundColor: AppColors.appBlue,
         //  minimumSize:  Size.fromWidth(50),
         padding: EdgeInsets.symmetric(
             horizontal: DeviceUtils.getScaledWidth(context, 30),
@@ -146,7 +147,7 @@ class _DeleteTaskState extends State<DeleteTask> {
       },
       child: Text(
         AppLocalizations.of(context).translate('address_done'),
-        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+        style: Theme.of(context).textTheme.titleMedium!.copyWith(
             color: Colors.white,
             fontSize: DeviceUtils.getScaledWidth(context, 3.5)),
         textAlign: TextAlign.center,
